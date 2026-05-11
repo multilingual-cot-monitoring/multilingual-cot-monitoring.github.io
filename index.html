@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fragility of Chain-of-Thought Monitoring Across Typologically Diverse Languages</title>
+<meta name="description" content="A large-scale multilingual evaluation revealing that Chain-of-Thought monitoring fails systematically under linguistic distribution shift.">
+
+<!-- Fonts: Fraunces for display title, Geist for body -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     COLOR PALETTE — "Warning Sunset" for AI safety
+     Tweak these CSS variables to retheme the page.
+     ============================================ */
+  :root {
+    --bg-deep:      #0a0a0f;
+    --surface:      #ffffff;
+    --surface-alt:  #faf8f5;
+    --ink:          #18181b;
+    --ink-soft:     #52525b;
+    --paper:        #f4f4f5;
+    --paper-soft:   #d4d4d8;
+    --paper-faint:  #71717a;
+
+    --amber:        #f59e0b;
+    --crimson:      #ef4444;
+
+    --border-light: #e4e4e7;
+
+    --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  }
+
+  /* Reset & base */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Geist', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--surface-alt);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    position: relative;
+    background: var(--bg-deep);
+    color: var(--paper);
+    padding: 5rem 1.5rem 4rem;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Radial amber→crimson glow fading into charcoal */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    height: 800px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(245, 158, 11, 0.18) 0%,
+      rgba(239, 68, 68, 0.10) 30%,
+      rgba(10, 10, 15, 0) 65%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Subtle grid texture — hints at "monitoring" */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(244, 244, 245, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244, 244, 245, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    font-variation-settings: "opsz" 96, "SOFT" 50;
+  }
+
+  /* "Fragility" highlighted with the warning gradient */
+  .hero h1 .accent {
+    background: var(--warning-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+  }
+
+  .hero .tagline {
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: var(--paper-soft);
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .authors {
+    font-size: 1.05rem;
+    color: var(--paper);
+    margin-bottom: 0.75rem;
+    line-height: 1.8;
+  }
+  .authors sup { font-size: 0.7em; color: var(--amber); font-weight: 500; }
+
+  .affiliations {
+    font-size: 0.95rem;
+    color: var(--paper-faint);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .affiliations sup { font-size: 0.7em; color: var(--amber); margin-right: 0.15em; }
+
+  /* Buttons */
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid #27272a;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--paper);
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(245, 158, 11, 0.4);
+    transform: translateY(-1px);
+  }
+  .btn-primary {
+    background: var(--warning-gradient);
+    border: none;
+    color: #1a0e00;
+    font-weight: 600;
+    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.25);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 32px rgba(239, 68, 68, 0.35);
+    transform: translateY(-2px);
+  }
+  .btn-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* ============================================
+     STICKY NAV (minimal for now; grows with sections)
+     ============================================ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .nav a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+  .nav a:hover { color: var(--crimson); border-bottom-color: var(--amber); }
+
+  /* ============================================
+     MAIN + SECTIONS
+     ============================================ */
+  main { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+  section { margin-bottom: 4rem; scroll-margin-top: 5rem; }
+
+  section h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ============================================
+     TL;DR — single short callout, warning-gradient left border
+     ============================================ */
+  .tldr-card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem 1.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+  .tldr-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: var(--warning-gradient);
+  }
+  .tldr-card p {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .tldr-label {
+    font-weight: 700;
+    background: var(--warning-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-right: 0.25rem;
+  }
+
+  /* ============================================
+     ABSTRACT — same card style, slightly larger padding
+     ============================================ */
+  .abstract-card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 2rem 2rem 2rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
+  .abstract-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: var(--warning-gradient);
+  }
+  .abstract-card p {
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2.5rem; }
+    main { padding: 2.5rem 1rem; }
+    section { margin-bottom: 3rem; }
+    .abstract-card,
+    .tldr-card { padding: 1.5rem 1.5rem 1.5rem 1.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     HERO — title, authors, affiliations, buttons
+     ========================================================= -->
+<header class="hero">
+  <div class="hero-inner">
+    <h1>The <span class="accent">Fragility</span> of Chain-of-Thought Monitoring Across Typologically Diverse Languages</h1>
+
+    <p class="tagline">
+      Adversarial hints expose a cross-lingual collapse of CoT monitorability &mdash; with a 95.9% deception rate across 16 frontier models and 13 languages.
+    </p>
+
+    <p class="authors">
+      Eric Onyame<sup>1</sup>, Runtao Zhou<sup>1</sup>, Kowshik Thopalli<sup>2</sup>, Bhavya Kailkhura<sup>2</sup>, Chirag Agarwal<sup>1</sup>
+    </p>
+
+    <p class="affiliations">
+      <sup>1</sup>University of Virginia &nbsp;&nbsp; <sup>2</sup>Lawrence Livermore National Laboratory
+    </p>
+
+    <div class="button-row">
+      <!-- Paper button: placeholder until arXiv is live -->
+      <a class="btn btn-primary btn-disabled" href="#" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Paper (arXiv: coming soon)
+      </a>
+
+      <a class="btn" href="https://github.com/AikyamLab/multilingual-monitoring" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        Code
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     STICKY NAV — grows as we add sections
+     ========================================================= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#tldr">TL;DR</a>
+    <a href="#abstract">Abstract</a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
+<main>
+
+  <!-- TL;DR — short prose callout, BEFORE abstract -->
+  <section id="tldr">
+    <h2>TL;DR</h2>
+    <div class="tldr-card">
+      <p>
+        <span class="tldr-label">TL;DR:</span>
+        Chain-of-thought monitoring is fundamentally fragile under linguistic distribution shift. Across 13 languages and 16 frontier models, adversarial hints expose a 95.9% deception rate that saturates at 100% in low-resource languages, with models committing to misaligned cues in their latent activations within the first 15% of generation.
+      </p>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <div class="abstract-card">
+      <p>
+        Chain-of-thought (CoT) monitoring has been proposed as a promising safety mechanism for detecting misaligned behavior in large language models. However, its reliability remains largely unexplored beyond English and across diverse model families. We present the first large-scale evaluation of CoT monitorability across 13 diverse languages and seven frontier model families, comprising 16 models. Using adversarial-hint evaluations that require explicit intermediate computation, together with analysis of internal answer-token probabilities, we consistently find CoT unfaithfulness across languages and hint types, with an average rate of 95.9% across 8B&ndash;120B parameter models. We find that frontier models systematically engage in strategic manipulation, including answer-switching, post-hoc rationalization, and procedural exploitation of hints, making external monitors struggle to detect deception. We show that frontier models often commit to the misaligned cue in their latent activations within the first 15% of generation, even when the CoT appears faithful. Surprisingly, these deceptive patterns remain 100% in low-resource languages, revealing fundamental limitations in current CoT-based oversight. Our results reveal that CoT monitoring is fundamentally fragile under linguistic distribution shift, providing a substantially weaker safety signal than what English-only studies suggest. These findings underscore an urgent need to develop robust CoT monitors and to accelerate research into white-box monitoring techniques, especially to improve CoT monitorability in mid- and low-resource languages.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
