@@ -47,13 +47,13 @@
   a { color: inherit; text-decoration: none; }
 
   /* ============================================
-     HERO — tightened vertical rhythm
+     HERO — tightened further at top
      ============================================ */
   .hero {
     position: relative;
     background: var(--bg-deep);
     color: var(--paper);
-    padding: 3.5rem 1.5rem 2.75rem;   /* tighter top/bottom */
+    padding: 2.75rem 1.5rem 2.5rem;   /* tighter (was 3.5rem / 2.75rem) */
     overflow: hidden;
     text-align: center;
   }
@@ -94,7 +94,7 @@
   .hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 880px;                 /* narrower than before (was 1000) */
+    max-width: 880px;
     margin: 0 auto;
     animation: fadeUp 0.7s ease-out;
   }
@@ -107,10 +107,10 @@
   .hero h1 {
     font-family: 'Fraunces', Georgia, serif;
     font-weight: 600;
-    font-size: clamp(1.875rem, 4.2vw, 3rem);  /* tighter max (was 3.75) */
+    font-size: clamp(1.875rem, 4.2vw, 3rem);
     line-height: 1.12;
     letter-spacing: -0.02em;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
     font-variation-settings: "opsz" 96, "SOFT" 50;
   }
 
@@ -127,13 +127,13 @@
     font-size: clamp(0.95rem, 1.45vw, 1.08rem);
     color: var(--paper-soft);
     max-width: 680px;
-    margin: 0 auto 1.75rem;
+    margin: 0 auto 1.5rem;
   }
 
   .authors {
     font-size: 1rem;
     color: var(--paper);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     line-height: 1.7;
   }
   .authors sup { font-size: 0.7em; color: var(--amber); font-weight: 500; }
@@ -141,7 +141,7 @@
   .affiliations {
     font-size: 0.9rem;
     color: var(--paper-faint);
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
     line-height: 1.6;
   }
   .affiliations sup { font-size: 0.7em; color: var(--amber); margin-right: 0.15em; }
@@ -222,9 +222,9 @@
      MAIN + SECTIONS
      ============================================ */
   main {
-    max-width: 980px;                 /* slightly narrower for tighter reading */
+    max-width: 980px;
     margin: 0 auto;
-    padding: 2.75rem 1.5rem 3.5rem;   /* tighter top space (was 4rem) */
+    padding: 2.75rem 1.5rem 3.5rem;
   }
   section { margin-bottom: 3rem; scroll-margin-top: 4.5rem; }
 
@@ -307,16 +307,85 @@
   }
 
   /* ============================================
+     FOOTER — dark, with vigilance tagline
+     ============================================ */
+  footer {
+    position: relative;
+    background: var(--bg-deep);
+    color: var(--paper);
+    padding: 3.5rem 1.5rem 2.25rem;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Subtle radial glow rising from the bottom — echoes the hero */
+  footer::before {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(245, 158, 11, 0.14) 0%,
+      rgba(239, 68, 68, 0.07) 35%,
+      rgba(10, 10, 15, 0) 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .footer-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .footer-cta {
+    margin-bottom: 1.75rem;
+  }
+
+  .footer-tagline {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--paper-soft);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.005em;
+  }
+
+  .footer-tagline strong {
+    font-weight: 600;
+    font-style: normal;
+    background: var(--warning-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .footer-copyright {
+    font-size: 0.82rem;
+    color: var(--paper-faint);
+    letter-spacing: 0.02em;
+  }
+
+  /* ============================================
      RESPONSIVE
      ============================================ */
   @media (max-width: 720px) {
-    .hero { padding: 2.5rem 1rem 2rem; }
+    .hero { padding: 2rem 1rem 1.75rem; }
     main { padding: 2rem 1rem 2.5rem; }
     section { margin-bottom: 2.25rem; }
     .nav-inner { gap: 1.1rem; padding: 0.7rem 1rem; }
     .nav a { font-size: 0.86rem; }
     .abstract-card,
     .tldr-card { padding: 1.25rem 1.25rem 1.25rem 1.5rem; }
+    footer { padding: 2.5rem 1rem 1.75rem; }
   }
 </style>
 </head>
@@ -357,7 +426,7 @@
 </header>
 
 <!-- =========================================================
-     STICKY NAV — 7 items, grows by editing the labels & ids
+     STICKY NAV — 7 items
      ========================================================= -->
 <nav class="nav">
   <div class="nav-inner">
@@ -425,6 +494,28 @@
   </section>
 
 </main>
+
+<!-- =========================================================
+     FOOTER — vigilance tagline + arXiv CTA
+     ========================================================= -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-cta">
+      <a class="btn btn-primary btn-disabled" href="#" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        arXiv Paper (coming soon)
+      </a>
+    </div>
+
+    <p class="footer-tagline">
+      Built with <strong>vigilance</strong> &mdash; pressure-testing AI oversight across diverse languages, so safety <strong>doesn&rsquo;t end at English</strong>.
+    </p>
+
+    <p class="footer-copyright">
+      &copy; 2026 &middot; Multilingual CoT Monitoring &middot; Project page
+    </p>
+  </div>
+</footer>
 
 </body>
 </html>
