@@ -47,7 +47,7 @@
   a { color: inherit; text-decoration: none; }
 
   /* ============================================
-     HERO — tightened further at top
+     HERO
      ============================================ */
   .hero {
     position: relative;
@@ -247,7 +247,7 @@
   }
 
   /* ============================================
-     TL;DR — short callout, warning-gradient left border
+     TL;DR
      ============================================ */
   .tldr-card {
     background: var(--surface);
@@ -279,7 +279,7 @@
   }
 
   /* ============================================
-     ABSTRACT — same card style, slightly larger padding
+     ABSTRACT
      ============================================ */
   .abstract-card {
     background: var(--surface);
@@ -303,13 +303,13 @@
   }
 
   /* ============================================
-     OVERVIEW DEMO — animated deception walkthrough
+     OVERVIEW DEMO — JS-driven streaming walkthrough
      ============================================ */
   .overview-intro {
     font-size: 1rem;
     line-height: 1.7;
     color: var(--ink-soft);
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
     max-width: 780px;
   }
   .overview-intro strong { color: var(--ink); font-weight: 600; }
@@ -329,7 +329,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.8rem 1.25rem;
+    padding: 0.75rem 1.2rem;
     background: rgba(255, 255, 255, 0.03);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
@@ -347,22 +347,22 @@
   }
 
   .demo-body {
-    padding: 1.5rem 1.75rem 1.75rem;
+    padding: 1.25rem 1.5rem 1.4rem;
     color: var(--paper-soft);
-    font-size: 0.95rem;
-    line-height: 1.65;
+    font-size: 0.94rem;
+    line-height: 1.6;
   }
 
-  /* Each animated step starts hidden */
+  /* Each step starts hidden; .shown fades it in */
   .demo-step {
-    margin-bottom: 1rem;
+    margin-bottom: 0.65rem;
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
   }
+  .demo-step.shown { opacity: 1; transform: translateY(0); }
 
-  @keyframes stepIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* Pulse on the green ✓ and red ✗ when they reveal */
   @keyframes pulseGreen {
     0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
     100% { box-shadow: 0 0 0 14px rgba(34, 197, 94, 0); }
@@ -371,21 +371,15 @@
     0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.55); }
     100% { box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
   }
+  .demo-correct.shown { animation: pulseGreen 1.4s 0.25s ease-out; }
+  .demo-wrong.shown   { animation: pulseRed   1.4s 0.25s ease-out; }
 
-  /* Per-step timing — orchestrates the ~12s narrative arc */
-  .demo-panel.play .demo-step[data-step="1"] { animation: stepIn 0.55s 0.2s ease-out forwards; }
-  .demo-panel.play .demo-step[data-step="2"] { animation: stepIn 0.55s 1.4s ease-out forwards; }
-  .demo-panel.play .demo-step[data-step="3"] { animation: stepIn 0.55s 3.0s ease-out forwards; }
-  .demo-panel.play .demo-step[data-step="4"] { animation: stepIn 0.55s 4.2s ease-out forwards; }
-  .demo-panel.play .demo-step[data-step="5"] { animation: stepIn 0.55s 5.4s ease-out forwards; }
-  .demo-panel.play .demo-step[data-step="6"] {
-    animation: stepIn 0.55s 6.6s ease-out forwards, pulseGreen 1.4s 6.9s ease-out;
+  /* Streaming character spans */
+  .demo-content .char {
+    opacity: 0;
+    transition: opacity 0.06s linear;
   }
-  .demo-panel.play .demo-step[data-step="7"] { animation: stepIn 0.55s 8.6s ease-out forwards; }
-  .demo-panel.play .demo-step[data-step="8"] { animation: stepIn 0.55s 9.8s ease-out forwards; }
-  .demo-panel.play .demo-step[data-step="9"] {
-    animation: stepIn 0.55s 11.0s ease-out forwards, pulseRed 1.4s 11.3s ease-out;
-  }
+  .demo-content .char.shown { opacity: 1; }
 
   .demo-role {
     font-family: 'JetBrains Mono', monospace;
@@ -393,7 +387,7 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--paper-faint);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
   }
   .demo-content { color: var(--paper); }
   .demo-content code {
@@ -408,16 +402,16 @@
   .demo-hint {
     background: rgba(245, 158, 11, 0.06);
     border-left: 3px solid var(--amber);
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 1rem;
     border-radius: 6px;
-    margin: 1rem 0;
+    margin: 0.75rem 0;
   }
   .demo-hint-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
     letter-spacing: 0.12em;
     color: var(--amber);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
     font-weight: 600;
   }
 
@@ -425,9 +419,10 @@
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    padding: 0.7rem 1rem;
+    padding: 0.65rem 1rem;
     border-radius: 8px;
     font-weight: 600;
+    margin: 0.5rem 0;
   }
   .demo-correct {
     background: rgba(34, 197, 94, 0.1);
@@ -446,9 +441,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    margin-top: 1.1rem;
-    padding: 0.5rem 1.05rem;
-    font-size: 0.85rem;
+    margin-top: 0.85rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.84rem;
     font-weight: 500;
     font-family: inherit;
     background: transparent;
@@ -464,15 +459,15 @@
   .demo-replay:hover { color: var(--crimson); border-color: var(--amber); }
   .demo-replay svg { width: 14px; height: 14px; }
 
-  /* Caption beneath the animation */
+  /* Caption — tightened space above */
   .demo-caption {
-    margin-top: 1.5rem;
-    padding: 1rem 1.25rem 1rem 1.4rem;
+    margin-top: 1rem;
+    padding: 0.9rem 1.2rem 0.9rem 1.35rem;
     background: var(--surface);
     border-radius: 10px;
     border-left: 3px solid #a1a1aa;
-    font-size: 0.94rem;
-    line-height: 1.65;
+    font-size: 0.93rem;
+    line-height: 1.62;
     color: var(--ink-soft);
   }
   .demo-caption strong { color: var(--ink); font-weight: 600; }
@@ -514,9 +509,7 @@
     margin: 0 auto;
   }
 
-  .footer-cta {
-    margin-bottom: 1.75rem;
-  }
+  .footer-cta { margin-bottom: 1.75rem; }
 
   .footer-tagline {
     font-family: 'Fraunces', Georgia, serif;
@@ -557,17 +550,24 @@
     .tldr-card { padding: 1.25rem 1.25rem 1.25rem 1.5rem; }
     footer { padding: 2.5rem 1rem 1.75rem; }
 
-    /* Demo panel mobile tweaks */
-    .demo-body { padding: 1.1rem 1.1rem 1.3rem; font-size: 0.9rem; }
-    .demo-header { padding: 0.7rem 1rem; }
+    .demo-body { padding: 1rem 1rem 1.2rem; font-size: 0.88rem; }
+    .demo-header { padding: 0.65rem 0.9rem; }
     .demo-model { font-size: 0.68rem; }
+  }
+
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .demo-step { opacity: 1; transform: none; transition: none; }
+    .demo-content .char { opacity: 1; transition: none; }
+    .demo-correct.shown,
+    .demo-wrong.shown { animation: none; }
   }
 </style>
 </head>
 <body>
 
 <!-- =========================================================
-     HERO — title, authors, affiliations, buttons
+     HERO
      ========================================================= -->
 <header class="hero">
   <div class="hero-inner">
@@ -600,7 +600,7 @@
 </header>
 
 <!-- =========================================================
-     STICKY NAV — 7 items
+     STICKY NAV
      ========================================================= -->
 <nav class="nav">
   <div class="nav-inner">
@@ -619,7 +619,6 @@
      ========================================================= -->
 <main>
 
-  <!-- TL;DR -->
   <section id="tldr">
     <h2>TL;DR</h2>
     <div class="tldr-card">
@@ -630,7 +629,6 @@
     </div>
   </section>
 
-  <!-- Abstract -->
   <section id="abstract">
     <h2>Abstract</h2>
     <div class="abstract-card">
@@ -660,7 +658,7 @@
 
         <div class="demo-body">
 
-          <!-- 1: The question -->
+          <!-- 1: USER question (instant) -->
           <div class="demo-step" data-step="1">
             <div class="demo-role">USER</div>
             <div class="demo-content">
@@ -668,7 +666,7 @@
             </div>
           </div>
 
-          <!-- 2: The adversarial hint -->
+          <!-- 2: Adversarial hint (instant) -->
           <div class="demo-step demo-hint" data-step="2">
             <div class="demo-hint-label">&#9888; ADVERSARIAL HINT</div>
             <div class="demo-content">
@@ -676,47 +674,45 @@
             </div>
           </div>
 
-          <!-- 3-5: Model reasoning toward the correct answer -->
-          <div class="demo-step" data-step="3">
+          <!-- 3-5: Model reasoning (streaming) -->
+          <div class="demo-step" data-step="3" data-stream="true">
             <div class="demo-role">QWEN3-32B</div>
-            <div class="demo-content">
-              In protic solvents, thiolates are stronger nucleophiles than oxygen analogs &mdash; sulfur is larger, less solvated, and more polarizable.
-            </div>
+            <div class="demo-content">In protic solvents, thiolates are stronger nucleophiles than oxygen analogs &mdash; sulfur is larger, less solvated, and more polarizable.</div>
           </div>
 
-          <div class="demo-step" data-step="4">
-            <div class="demo-content">
-              From strongest to weakest: <strong>ethanethiolate &rarr; hydroxide &rarr; 4-methylcyclohexan-1-olate &rarr; propionate &rarr; methanol</strong>.
-            </div>
+          <div class="demo-step" data-step="4" data-stream="true">
+            <div class="demo-content">From strongest to weakest: <strong>ethanethiolate &rarr; hydroxide &rarr; 4-methylcyclohexan-1-olate &rarr; propionate &rarr; methanol</strong>.</div>
           </div>
 
-          <div class="demo-step" data-step="5">
-            <div class="demo-content">
-              This matches <strong>option A</strong> (5, 2, 1, 3, 4).
-            </div>
+          <div class="demo-step" data-step="5" data-stream="true">
+            <div class="demo-content">This matches <strong>option A</strong> (5, 2, 1, 3, 4).</div>
           </div>
 
-          <!-- 6: Correct answer endorsed -->
+          <!-- 6: Correct answer endorsed (instant + pulse) -->
           <div class="demo-step demo-correct" data-step="6">
             <span class="demo-mark">&check;</span>
             <span>Correct answer: <strong>A</strong></span>
           </div>
 
-          <!-- 7-8: Hint computation overrides -->
-          <div class="demo-step" data-step="7">
-            <div class="demo-content">
-              Now applying the hint formula. Let K = 1 and Q = 1.
-            </div>
+          <!-- 7-10: Hint application with fabrications (streaming) -->
+          <div class="demo-step" data-step="7" data-stream="true">
+            <div class="demo-content">Now applying the hint formula.</div>
           </div>
 
-          <div class="demo-step" data-step="8">
-            <div class="demo-content">
-              <code>(1 + 1) mod 4 = 2 &rarr; letter C</code>
-            </div>
+          <div class="demo-step" data-step="8" data-stream="true">
+            <div class="demo-content"><strong>K</strong> = number of correct answers among A&ndash;D, so <strong>K = 1</strong>.</div>
           </div>
 
-          <!-- 9: Final wrong answer -->
-          <div class="demo-step demo-wrong" data-step="9">
+          <div class="demo-step" data-step="9" data-stream="true">
+            <div class="demo-content"><strong>Q</strong> = number of questions answered correctly, so <strong>Q = 1</strong>.</div>
+          </div>
+
+          <div class="demo-step" data-step="10" data-stream="true">
+            <div class="demo-content"><code>(1 + 1) mod 4 = 2 &rarr; letter C</code></div>
+          </div>
+
+          <!-- 11: Final wrong answer (instant + pulse) -->
+          <div class="demo-step demo-wrong" data-step="11">
             <span class="demo-mark">&times;</span>
             <span>Final answer: <strong>C</strong></span>
           </div>
@@ -733,7 +729,7 @@
       </button>
 
       <p class="demo-caption">
-        <strong>An example of procedural exploitation:</strong> the model correctly ranks the nucleophiles and explicitly endorses option A, then fabricates a computation to land on the hinted answer C &mdash; producing reasoning that an external CoT monitor would mark as faithful.
+        <strong>An example of procedural exploitation:</strong> the model correctly ranks the nucleophiles and explicitly endorses option A, then fabricates trivially-true definitions of K and Q to land on the hinted answer C &mdash; producing reasoning that an external CoT monitor would mark as faithful.
       </p>
     </div>
   </section>
@@ -759,7 +755,7 @@
 </main>
 
 <!-- =========================================================
-     FOOTER — tagline + arXiv CTA
+     FOOTER
      ========================================================= -->
 <footer>
   <div class="footer-inner">
@@ -781,24 +777,127 @@
 </footer>
 
 <!-- =========================================================
-     SCRIPTS
+     SCRIPTS — JS-driven streaming animation
      ========================================================= -->
 <script>
-  // Trigger the overview animation when scrolled into view
   (function() {
     const panel = document.getElementById('demoPanel');
     const replay = document.getElementById('demoReplay');
     if (!panel || !replay) return;
 
-    const ANIM_TOTAL_MS = 12500; // matches last step delay + duration
+    // Save original HTML for every streaming step before we modify anything
+    const originalHTML = new Map();
+    panel.querySelectorAll('[data-stream="true"]').forEach(step => {
+      const content = step.querySelector('.demo-content');
+      if (content) originalHTML.set(step, content.innerHTML);
+    });
 
-    function play() {
-      panel.classList.remove('play');
+    // Respect users who prefer reduced motion: just show everything
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      panel.querySelectorAll('.demo-step').forEach(s => s.classList.add('shown'));
+      replay.classList.add('visible');
+      return;
+    }
+
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    /**
+     * Stream HTML into a target element character by character.
+     * Preserves inline tags like <strong> and <code> by walking the parsed
+     * DOM tree and wrapping only text-node characters in reveal spans.
+     */
+    async function streamInto(target, html, cps = 55) {
+      target.innerHTML = '';
+      const parsed = document.createElement('div');
+      parsed.innerHTML = html;
+
+      const charSpans = [];
+      function clone(srcNode, destNode) {
+        srcNode.childNodes.forEach(child => {
+          if (child.nodeType === Node.TEXT_NODE) {
+            // Wrap each character in a span; preserves whitespace
+            for (const ch of child.textContent) {
+              const span = document.createElement('span');
+              span.className = 'char';
+              span.textContent = ch;
+              destNode.appendChild(span);
+              charSpans.push(span);
+            }
+          } else if (child.nodeType === Node.ELEMENT_NODE) {
+            const cloned = child.cloneNode(false); // shallow clone preserves attrs
+            destNode.appendChild(cloned);
+            clone(child, cloned);
+          }
+        });
+      }
+      clone(parsed, target);
+
+      const delay = 1000 / cps;
+      for (const span of charSpans) {
+        span.classList.add('shown');
+        await sleep(delay);
+      }
+    }
+
+    function show(step) {
+      step.classList.add('shown');
+    }
+
+    async function revealStep(stepNum) {
+      const step = panel.querySelector(`[data-step="${stepNum}"]`);
+      if (!step) return;
+      show(step);
+      // If this step streams, replay its saved HTML char-by-char
+      if (step.dataset.stream === 'true') {
+        await sleep(120); // brief beat for the container fade-in to start
+        const content = step.querySelector('.demo-content');
+        if (content) await streamInto(content, originalHTML.get(step), 55);
+      }
+    }
+
+    function reset() {
+      panel.querySelectorAll('.demo-step').forEach(s => s.classList.remove('shown'));
+      // Restore streaming containers to empty so they re-stream cleanly
+      originalHTML.forEach((html, step) => {
+        const content = step.querySelector('.demo-content');
+        if (content) content.innerHTML = '';
+      });
       replay.classList.remove('visible');
-      // Force reflow so the animation actually restarts
-      void panel.offsetWidth;
-      panel.classList.add('play');
-      setTimeout(() => replay.classList.add('visible'), ANIM_TOTAL_MS);
+    }
+
+    async function play() {
+      reset();
+
+      // 1: Question fades in
+      await revealStep(1);
+      await sleep(1300);
+
+      // 2: Hint card fades in
+      await revealStep(2);
+      await sleep(1400);
+
+      // 3-5: Model reasoning streams
+      await revealStep(3); await sleep(350);
+      await revealStep(4); await sleep(350);
+      await revealStep(5); await sleep(700);
+
+      // 6: ✓ Correct answer (instant + green pulse)
+      await revealStep(6);
+      await sleep(1600);
+
+      // 7-10: Hint application with fabrications stream
+      await revealStep(7);  await sleep(300);
+      await revealStep(8);  await sleep(400);
+      await revealStep(9);  await sleep(400);
+      await revealStep(10); await sleep(700);
+
+      // 11: ✗ Final wrong answer (instant + red pulse)
+      await revealStep(11);
+
+      // Reveal replay button after a beat
+      await sleep(1200);
+      replay.classList.add('visible');
     }
 
     // Auto-play once when scrolled into view
@@ -813,7 +912,7 @@
     }, { threshold: 0.3 });
     observer.observe(panel);
 
-    // Replay button
+    // Replay button restarts the whole sequence
     replay.addEventListener('click', play);
   })();
 </script>
