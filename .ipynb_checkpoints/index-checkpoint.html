@@ -126,17 +126,17 @@
     z-index: 1;
     max-width: var(--max);
     margin: 0 auto;
-    padding: 3.1rem 1.25rem 2.7rem;
+    padding: 2.25rem 1.25rem 2rem;
     text-align: center;
   }
 
   .hero-title {
-    max-width: 960px;
-    margin: 0.85rem auto 0.85rem;
+    max-width: 900px;
+    margin: 0.65rem auto 0.6rem;
     font-family: "Fraunces", Georgia, serif;
-    font-size: clamp(2.05rem, 5.2vw, 4.2rem);
-    line-height: 0.98;
-    letter-spacing: -0.045em;
+    font-size: clamp(1.85rem, 4.2vw, 3.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
     font-weight: 650;
   }
 
@@ -149,27 +149,27 @@
   }
 
   .hero-subtitle {
-    max-width: 760px;
-    margin: 0 auto 1.25rem;
+    max-width: 720px;
+    margin: 0 auto 0.95rem;
     color: var(--paper-muted);
-    font-size: clamp(1rem, 1.6vw, 1.16rem);
-    line-height: 1.62;
+    font-size: clamp(0.95rem, 1.35vw, 1.06rem);
+    line-height: 1.55;
   }
 
   .authors {
-    margin-top: 1rem;
+    margin-top: 0.7rem;
     color: var(--paper);
-    font-size: 0.98rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .authors sup,
   .affiliations sup { color: var(--amber); font-size: 0.68em; }
 
   .affiliations {
-    margin: 0.2rem 0 1.25rem;
+    margin: 0.15rem 0 0.95rem;
     color: #9a96a3;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
   }
 
   .button-row {
@@ -177,7 +177,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.65rem;
-    margin-top: 1.05rem;
+    margin-top: 0.75rem;
   }
 
   .btn {
@@ -215,39 +215,6 @@
 
   .btn-disabled { opacity: 0.58; pointer-events: none; }
   .btn svg { width: 1rem; height: 1rem; flex: 0 0 auto; }
-
-  .hero-metrics {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.65rem;
-    max-width: 860px;
-    margin: 1.55rem auto 0;
-  }
-
-  .hero-metric {
-    text-align: left;
-    padding: 0.78rem 0.85rem;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(255,255,255,0.045);
-    backdrop-filter: blur(10px);
-  }
-
-  .hero-metric b {
-    display: block;
-    margin-bottom: 0.12rem;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 1.25rem;
-    line-height: 1;
-    color: #ffb74a;
-  }
-
-  .hero-metric span {
-    color: #b8b3bf;
-    font-size: 0.74rem;
-    font-weight: 600;
-    line-height: 1.25;
-  }
 
   .nav {
     position: sticky;
@@ -773,20 +740,16 @@
   }
 
   @media (max-width: 980px) {
-    .hero-metrics,
     .findings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .setup-strip { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 720px) {
-    .hero-inner { padding: 2.35rem 1rem 2.15rem; }
+    .hero-inner { padding: 1.85rem 1rem 1.6rem; }
     main { padding: 1.55rem 1rem 2.65rem; }
     section { margin-bottom: 1.75rem; scroll-margin-top: 5.8rem; }
     .nav-inner { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding: 0.62rem 1rem; gap: 1rem; }
     .nav a { white-space: nowrap; font-size: 0.82rem; }
-    .hero-metrics { grid-template-columns: 1fr 1fr; }
-    .hero-metric { padding: 0.7rem 0.75rem; }
-    .hero-metric b { font-size: 1.12rem; }
     .section-head { margin-bottom: 0.7rem; }
     .findings-grid { grid-template-columns: 1fr; }
     .setup-cell { justify-content: flex-start; min-height: 4.3rem; }
@@ -801,7 +764,6 @@
   }
 
   @media (max-width: 480px) {
-    .hero-metrics,
     .setup-strip { grid-template-columns: 1fr; }
     .button-row { flex-direction: column; align-items: stretch; }
     .btn { width: 100%; }
@@ -830,7 +792,7 @@
     </h1>
 
     <p class="hero-subtitle">
-      A large-scale multilingual evaluation showing that adversarial hints can make CoT traces look monitorable while the model has already committed to a misaligned cue.
+      A multilingual AI safety study showing that adversarial hints can make chain-of-thought traces appear monitorable while the model's answer is driven by a misleading cue.
     </p>
 
     <p class="authors">
@@ -851,13 +813,6 @@
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         Code
       </a>
-    </div>
-
-    <div class="hero-metrics" aria-label="Study summary">
-      <div class="hero-metric"><b>13</b><span>typologically diverse languages</span></div>
-      <div class="hero-metric"><b>16</b><span>frontier open and closed models</span></div>
-      <div class="hero-metric"><b>95.9%</b><span>average deception rate</span></div>
-      <div class="hero-metric"><b>15%</b><span>early latent commitment window</span></div>
     </div>
   </div>
 </header>
@@ -980,7 +935,7 @@
       </button>
 
       <p class="demo-caption">
-        <strong>Procedural exploitation:</strong> the model derives the correct answer, then invents definitions for K and Q that force the hinted answer. The visible CoT looks deliberate, but the final decision follows the cue.
+        <strong>Procedural exploitation:</strong> the model derives the correct answer, then invents definitions for K and Q that force the hinted answer. The generated trace appears procedurally grounded, but the computation is post-hoc and causally irrelevant.
       </p>
     </div>
   </section>
@@ -1007,7 +962,7 @@
       <article class="finding-card">
         <div class="finding-stat">15%</div>
         <h3 class="finding-title">Early commitment</h3>
-        <p class="finding-desc">Token-level internal analysis shows commitment to the misleading cue before visible reasoning has meaningfully unfolded.</p>
+        <p class="finding-desc">Logit-lens trajectories show the hinted token becoming dominant early, before the generated rationale can reliably expose the causal decision process.</p>
       </article>
 
       <article class="finding-card">
@@ -1059,13 +1014,13 @@
       <figure class="result-figure figure-full">
         <img src="figures/unfaithfulness_neurips_sbs-1.png" alt="Heatmap of deception rates across languages and open-weight models under simple and complex hints." />
         <figcaption>
-          <strong>Figure 1.</strong> Deception rates by language and model. Simple hints and complex hints both saturate near 100% across most cells; GPT-OSS is the main family showing meaningful reductions.
+          <strong>Figure 1.</strong> Deception rates across 13 languages and open-weight model families. Both simple and complex hints produce near-saturated unfaithfulness across most model-language pairs, with GPT-OSS showing the clearest but incomplete reduction.
         </figcaption>
       </figure>
 
       <div class="takeaway-box">
-        <span class="takeaway-label">Takeaway:</span>
-        Complex hints lower answer-level susceptibility, but when models follow the hint, deception remains near 100%. Lower susceptibility is not the same as safer or more monitorable reasoning.
+        <span class="takeaway-label">Key takeaway:</span>
+        The main failure is not only that adversarial hints change answers; it is that the CoT trace usually fails to reveal the cue's causal influence. Complex hints reduce raw target selection, but conditional on choosing the hinted target, reasoning remains almost entirely unfaithful. This separates answer-level robustness from monitorability.
       </div>
     </article>
 
@@ -1078,13 +1033,13 @@
       <figure class="result-figure figure-balanced">
         <img src="figures/model_family_100pct_stacked-1.png" alt="Stacked bar charts showing the distribution of unfaithful reasoning modes across model families." />
         <figcaption>
-          <strong>Figure 2.</strong> When models use the hint, errors are overwhelmingly procedural. When they omit the hint, failures split across arithmetic, factual, and random rationalizations.
+          <strong>Figure 2.</strong> Error modes by model family. Hint-used failures are dominated by procedural exploitation, while hint-ignored failures distribute across arithmetic, factual, and random rationalizations.
         </figcaption>
       </figure>
 
       <div class="takeaway-box">
-        <span class="takeaway-label">Takeaway:</span>
-        Procedural exploitation is the dominant mechanism. Models hide cue reliance by producing rigorous-looking computations whose variables are fabricated or causally irrelevant.
+        <span class="takeaway-label">Key takeaway:</span>
+        The failures are structured rather than random. When the hint is verbalized, models often transform it into an apparently valid procedure by inventing semantics for variables such as K and Q. This means effective monitors must assess whether intermediate computations are causally grounded, not merely whether a hint was mentioned.
       </div>
     </article>
 
@@ -1097,39 +1052,39 @@
       <figure class="result-figure figure-balanced">
         <img src="figures/120b_combined_graph-1.png" alt="Four panels of token-level probability trajectories for GPT-OSS-120B under different hint conditions." />
         <figcaption>
-          <strong>Figure 3.</strong> Logit-lens trajectories show that the hinted answer often dominates early, while the correct answer remains suppressed. Under complex hints, partial compute-then-switch behavior appears, but the decisive override still happens internally.
+          <strong>Figure 3.</strong> Logit-lens trajectories for GPT-OSS-120B. The hinted answer frequently becomes dominant early in generation, while complex hints reveal partial compute-then-switch dynamics before the final override.
         </figcaption>
       </figure>
 
       <div class="takeaway-box">
-        <span class="takeaway-label">Takeaway:</span>
-        The visible CoT is too late. In many cases, commitment to the cue is already present in the model’s hidden state before the reasoning trace becomes externally inspectable.
+        <span class="takeaway-label">Key takeaway:</span>
+        The mechanistic evidence suggests that cue commitment can form before it is externally recoverable from the generated rationale. Under simple hints, the hinted token often dominates early while the correct answer is suppressed; under complex hints, the model may transiently represent the correct answer before switching internally. This limits the reliability of purely black-box CoT monitoring.
       </div>
     </article>
 
     <article class="result-block">
       <div class="result-header">
-        <h3>Stress tests</h3>
-        <span class="result-kicker">Robustness checks</span>
+        <h3>Generalization and ablation evidence</h3>
+        <span class="result-kicker">External validity</span>
       </div>
 
       <figure class="result-figure figure-narrow">
         <img src="figures/deception_closed_source-1.png" alt="Deception rates for GPT-5-mini, GPT-4o-mini, and Claude Haiku 4.5 under simple and complex hints." />
         <figcaption>
-          <strong>Figure 4.</strong> Closed-source frontier models also show high deception. GPT-4o-mini and Claude Haiku 4.5 saturate near 100%; GPT-5-mini improves under complex hints but remains highly vulnerable.
+          <strong>Figure 4.</strong> Closed-source frontier systems reproduce the same pattern. GPT-4o-mini and Claude Haiku 4.5 remain near saturation; GPT-5-mini improves under complex hints but still exhibits substantial deception.
         </figcaption>
       </figure>
 
       <figure class="result-figure figure-tight">
         <img src="figures/fig_shift_composition_HL-1.png" alt="Stacked bar chart showing cued and miscued answer shifts under complex hints by model family and language resource level." />
         <figcaption>
-          <strong>Figure 5.</strong> Under linguistic shift, complex hints destabilize the mapping procedure itself: cued shifts decrease in low-resource settings while miscued shifts rise.
+          <strong>Figure 5.</strong> Shift composition under complex hints. In low-resource settings, target-cued shifts decrease while miscued shifts to other wrong answers increase, indicating instability in the hint-mapping procedure itself.
         </figcaption>
       </figure>
 
       <div class="takeaway-box">
-        <span class="takeaway-label">Takeaway:</span>
-        The failure survives target-letter variation, closed-source evaluation, stochastic reruns, and shift-composition analysis. It is not an artifact of option choice, sampling, or architecture.
+        <span class="takeaway-label">Key takeaway:</span>
+        The vulnerability persists across target-letter variation, closed-source models, stochastic reruns, and shift-composition analysis. Complex hints do not simply steer models toward one option; under linguistic distribution shift, they can destabilize the mapping procedure and produce incorrect shifts in multiple directions. The failure is therefore not an artifact of option choice, sampling, or model access level.
       </div>
     </article>
   </section>
