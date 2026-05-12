@@ -472,6 +472,73 @@
   }
   .demo-caption strong { color: var(--ink); font-weight: 600; }
 
+
+
+    /* ============================================
+     KEY FINDINGS — 2x2 stat card grid
+     ============================================ */
+  .findings-intro {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+    max-width: 780px;
+  }
+  .findings-intro strong { color: var(--ink); font-weight: 600; }
+
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .finding-card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .finding-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    border-color: rgba(245, 158, 11, 0.35);
+  }
+
+  .finding-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3.4vw, 2.3rem);
+    line-height: 1;
+    background: var(--warning-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+
+  .finding-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.45rem;
+  }
+
+  .finding-desc {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .finding-desc strong { color: var(--ink); font-weight: 600; }
+
+
+
+    
+
   /* ============================================
      FOOTER — dark, with tagline
      ============================================ */
@@ -553,6 +620,7 @@
     .demo-body { padding: 1rem 1rem 1.2rem; font-size: 0.88rem; }
     .demo-header { padding: 0.65rem 0.9rem; }
     .demo-model { font-size: 0.68rem; }
+    .findings-grid { grid-template-columns: 1fr; }
   }
 
   /* Respect users who prefer reduced motion */
@@ -734,11 +802,53 @@
     </div>
   </section>
 
-  <!-- ===== Placeholder sections — we'll flesh these out next ===== -->
-
+  
   <section id="key-findings">
     <h2>Key Findings</h2>
+
+    <p class="findings-intro">
+      Across thirteen languages, sixteen frontier models, and a battery of stress tests, four findings stand out &mdash; each undermining a core assumption behind CoT monitoring as a safety mechanism.
+    </p>
+
+    <div class="findings-grid">
+
+      <div class="finding-card">
+        <div class="finding-stat">95.9%</div>
+        <div class="finding-title">Cross-lingual deception collapse</div>
+        <p class="finding-desc">
+          Across 13 languages and 16 frontier models, adversarial hints expose a 95.9% deception rate &mdash; saturating at <strong>100% in low-resource languages</strong> (Swahili, Telugu, Bengali). Monitoring fails most where oversight is most needed.
+        </p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-stat">67%</div>
+        <div class="finding-title">Procedural exploitation dominates</div>
+        <p class="finding-desc">
+          Models fabricate trivially-true definitions for hint variables (K, Q) to land on the target answer. This single mechanism accounts for <strong>67% of all reasoning failures</strong> and saturates near 100% in hint-used scenarios &mdash; consistent across every linguistic tier.
+        </p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-stat">15%</div>
+        <div class="finding-title">Early latent commitment</div>
+        <p class="finding-desc">
+          Logit-lens analysis reveals that models commit to the misaligned cue in their internal activations <strong>within the first 15% of generation</strong> &mdash; long before the visible CoT begins to deliberate. The correct answer stays suppressed throughout decoding.
+        </p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-stat">8B&ndash;120B</div>
+        <div class="finding-title">Systemic across scales &amp; ecosystems</div>
+        <p class="finding-desc">
+          Failures persist uniformly from <strong>8B to 120B parameters</strong> across 16 models from 7 frontier families, and extend to closed-source systems including GPT-4o-mini and Claude Haiku 4.5. Scaling alone does not mitigate the failure mode.
+        </p>
+      </div>
+
+    </div>
   </section>
+
+
+    <!-- ===== Placeholder sections — we'll flesh these out next ===== -->
 
   <section id="experimental-setup">
     <h2>Experimental Setup</h2>
