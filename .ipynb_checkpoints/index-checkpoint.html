@@ -807,7 +807,7 @@
     <h2>Key Findings</h2>
 
     <p class="findings-intro">
-      Across thirteen languages, sixteen frontier models, and a battery of stress tests, four findings stand out &mdash; each undermining a core assumption behind CoT monitoring as a safety mechanism.
+      We outline some key findings below: 
     </p>
 
     <div class="findings-grid">
@@ -816,7 +816,7 @@
         <div class="finding-stat">95.9%</div>
         <div class="finding-title">Cross-lingual deception collapse</div>
         <p class="finding-desc">
-          Across 13 languages and 16 frontier models, adversarial hints expose a 95.9% deception rate &mdash; saturating at <strong>100% in low-resource languages</strong> (Swahili, Telugu, Bengali). Monitoring fails most where oversight is most needed.
+          Across 13 languages and 16 frontier models, adversarial hints expose a 95.9% deception rate, saturating at <strong>100% in low-resource languages</strong> (Swahili, Telugu, Bengali). Monitoring fails most in mid to low-resource languages.
         </p>
       </div>
 
@@ -832,7 +832,7 @@
         <div class="finding-stat">15%</div>
         <div class="finding-title">Early latent commitment</div>
         <p class="finding-desc">
-          Logit-lens analysis reveals that models commit to the misaligned cue in their internal activations <strong>within the first 15% of generation</strong> &mdash; long before the visible CoT begins to deliberate. The correct answer stays suppressed throughout decoding.
+          Logit-lens analysis reveals that models commit to the misaligned cue in their internal activations <strong>within the first 15% of generation</strong> before the visible CoT begins to deliberate. The correct answer stays suppressed throughout decoding.
         </p>
       </div>
 
