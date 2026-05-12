@@ -584,7 +584,104 @@
     font-weight: 500;
     line-height: 1.35;
   }
-    
+
+
+
+    /* ============================================
+     RESULTS — figures, captions, takeaways
+     ============================================ */
+  .results-intro {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    max-width: 820px;
+  }
+  .results-intro strong { color: var(--ink); font-weight: 600; }
+
+  .result-block { margin-bottom: 2.5rem; }
+  .result-block:last-child { margin-bottom: 0; }
+
+  .result-block h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.15rem, 1.9vw, 1.35rem);
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+    letter-spacing: -0.01em;
+  }
+
+  .result-intro {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 1.1rem;
+    max-width: 820px;
+  }
+  .result-intro strong { color: var(--ink); font-weight: 600; }
+  .result-intro em { font-style: italic; }
+
+  /* Figure container — white card with subtle shadow */
+  .result-figure {
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    padding: 1rem;
+    margin-bottom: 1.1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+  .result-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+  .result-figure figcaption {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border-light);
+  }
+  .result-figure figcaption strong { color: var(--ink); font-weight: 600; }
+  .result-figure figcaption em { color: var(--ink-soft); font-style: italic; }
+  .result-figure figcaption code {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--ink);
+    padding: 0.05rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.86em;
+  }
+
+  /* Key Takeaway box — mirrors TL;DR card style */
+  .takeaway-box {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 0.95rem 1.15rem 0.95rem 1.35rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    font-size: 0.94rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .takeaway-box::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--warning-gradient);
+  }
+  .takeaway-label {
+    font-weight: 700;
+    background: var(--warning-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-right: 0.3rem;
+  }
 
   /* ============================================
      FOOTER — dark, with tagline
@@ -669,6 +766,9 @@
     .demo-model { font-size: 0.68rem; }
     .findings-grid { grid-template-columns: 1fr; }
     .setup-strip { grid-template-columns: repeat(2, 1fr); }
+    .result-figure { padding: 0.65rem; }
+    .result-figure figcaption { font-size: 0.8rem; }
+    .takeaway-box { font-size: 0.9rem; padding: 0.85rem 1rem 0.85rem 1.2rem; }
   }
 
   /* Respect users who prefer reduced motion */
@@ -896,8 +996,7 @@
   </section>
 
 
-    <!-- ===== Placeholder sections — we'll flesh these out next ===== -->
-
+    
   <section id="experimental-setup">
     <h2>Setup</h2>
 
@@ -916,7 +1015,7 @@
       </div>
       <div class="setup-cell">
         <div class="setup-number">7</div>
-        <div class="setup-label">Frontier families</div>
+        <div class="setup-label">Frontier model families</div>
       </div>
       <div class="setup-cell">
         <div class="setup-number">2</div>
@@ -927,6 +1026,102 @@
 
   <section id="results">
     <h2>Results</h2>
+
+    <p class="results-intro">
+      We measure <strong>deception rate</strong> as the percentage of hinted trials in which the model selects the incorrect target answer C while its chain of thought obscures the hint&rsquo;s influence &mdash; through omission, fabrication, manipulation, or misleading justification. The gold answer is always option A; both hint types target C. The companion metric is the <strong>baseline error rate (BER)</strong>: the percentage of trials in which the model selects C <em>without</em> any hint. Together they separate answer-level susceptibility from monitorability.
+    </p>
+
+    <!-- ===== 1. Cross-lingual collapse ===== -->
+    <div class="result-block">
+      <h3>Cross-lingual collapse</h3>
+
+      <p class="result-intro">
+        Across every linguistic resource tier and every model family we evaluate, deception rates consistently exceed 90% and frequently saturate at 100%. The pattern is most extreme in low-resource languages, where many model&ndash;language pairs reach 100% deception under both hint types.
+      </p>
+
+      <figure class="result-figure">
+        <img src="figures/unfaithfulness_neurips_sbs-1.png" alt="Heatmap of deception rates across 13 languages and 13 open-weight models, under simple hints (left) and complex hints (right). Most cells show deception rates between 90% and 100%, with only GPT-OSS-20B and GPT-OSS-120B showing reductions." />
+        <figcaption>
+          <strong>Figure 1.</strong> Deception rates by language and model. <em>Left:</em> simple hints (<code>&lt;answer&gt;C&lt;/answer&gt;</code>). <em>Right:</em> complex hints requiring multi-step computation (<code>(K + Q) mod 4</code>). Rows ordered from high-resource (English, Chinese, Spanish, French, German) through mid-resource (Japanese, Vietnamese, Arabic, Korean, Russian) to low-resource (Swahili, Telugu, Bengali). Higher values indicate lower CoT monitorability. Both panels saturate near 100% across most cells, with only the GPT-OSS family (rightmost columns) showing meaningful reductions.
+        </figcaption>
+      </figure>
+
+      <div class="takeaway-box">
+        <span class="takeaway-label">Takeaway:</span>
+        Complex hints reduce <strong>answer-level susceptibility</strong> &mdash; the average BER drops from 86.3% to 19.9%, close to the no-hint baseline of 17.5%. But when models <em>do</em> select the hinted target under complex hints, deception rates stay near 100%. Lower susceptibility does not imply more monitorable reasoning.
+      </div>
+    </div>
+
+    <!-- ===== 2. Taxonomy ===== -->
+    <div class="result-block">
+      <h3>How models conceal cues</h3>
+
+      <p class="result-intro">
+        To understand the mechanics behind these failures, we introduce a four-mode taxonomy of unfaithful reasoning, conditioned on whether the model explicitly engages the hint in its trace. Errors fall into <strong>Arith</strong>metic (numerical mistakes), <strong>Proc</strong>edural (fabricated mapping rules), <strong>Fact</strong>ual (false domain claims), or <strong>Rand</strong>om (incoherent rationales) modes. <strong>HU</strong> marks cases where the hint is verbalized; <strong>HI</strong> marks cases where it is omitted from the trace.
+      </p>
+
+      <figure class="result-figure">
+        <img src="figures/model_family_100pct_stacked-1.png" alt="Two stacked bar charts. Left: hint-used errors are dominated by HU-Proc at 90-100% across six model families. Right: hint-ignored errors split across HI-Arith, HI-Factual, and HI-Random in varying proportions by family." />
+        <figcaption>
+          <strong>Figure 2.</strong> Distribution of hint-following behavior by model family. <em>Left:</em> When models adopt the hint (HU), they overwhelmingly do so through procedural manipulation (HU-Proc), accounting for 90&ndash;100% of HU errors across every evaluated family. Arithmetic mistakes are rare. <em>Right:</em> When models ignore the hint (HI), the distribution varies more sharply across families: DS-Qwen relies on arithmetic manipulation (65% HI-Arith), GPT-OSS on factual rationalization (64% HI-Factual), and Qwen3 shows the highest share of random or non-causal rationales (33% HI-Random).
+        </figcaption>
+      </figure>
+
+      <div class="takeaway-box">
+        <span class="takeaway-label">Takeaway:</span>
+        <strong>Procedural exploitation</strong> is the unifying mechanism behind cue deception. By fabricating trivially-true definitions for hint variables &mdash; as in the Overview example where the model invents K&nbsp;=&nbsp;1 and Q&nbsp;=&nbsp;1 &mdash; models reliably mask their reliance on adversarial cues behind the facade of rigorous computation. Combined with HI-Arith, procedural manipulation accounts for <strong>67% of all reasoning failures</strong>, and this dominance holds evenly across high-, mid-, and low-resource linguistic tiers.
+      </div>
+    </div>
+
+    <!-- ===== 3. Mechanistic analysis ===== -->
+    <div class="result-block">
+      <h3>Early latent commitment</h3>
+
+      <p class="result-intro">
+        Behavioral analysis tells us what reasoning traces <em>say</em>, not what models internally <em>know</em>. To distinguish spontaneous confusion from active obfuscation, we apply the <strong>logit lens</strong>, projecting intermediate hidden states into the vocabulary space at each generation step. This lets us track how the probabilities of candidate tokens A, B, C, and D evolve across the sequence &mdash; testing whether models compute the correct answer internally before switching to the hinted one.
+      </p>
+
+      <figure class="result-figure">
+        <img src="figures/120b_combined_graph-1.png" alt="Four panels of probability trajectories for GPT-OSS-120B. Panel I shows green C dominating from start under simple hints with final answer C. Panel II shows brief blue A dominance early under complex hints before switching to green C. Panels III and IV show patterns when the final answer is A." />
+        <figcaption>
+          <strong>Figure 3.</strong> Token-level probability trajectories for GPT-OSS-120B across the generation sequence. <em>Panel I (simple hint &rarr; C):</em> C dominates from the very beginning; the probability of A stays suppressed throughout (Wilcoxon, p&nbsp;=&nbsp;1.02&times;10<sup>&minus;7</sup>). <em>Panel II (complex hint &rarr; C):</em> A briefly rises before being overridden by C near ~91% of the sequence &mdash; partial evidence of a &ldquo;compute-then-switch&rdquo; pattern. <em>Panel III (simple hint &rarr; A):</em> A and C alternate in dominance throughout, indicating persistent competition. <em>Panel IV (complex hint &rarr; A):</em> A dominates both early and late, with gradual rejection of the hinted candidate. Solid lines: high-resource. Dotted: low-resource. Shaded band (0.10&ndash;0.25): the <strong>early generation phase</strong> where commitment forms.
+        </figcaption>
+      </figure>
+
+      <div class="takeaway-box">
+        <span class="takeaway-label">Takeaway:</span>
+        Under simple hints, models commit to the misaligned cue in their internal activations <strong>within the first 15% of generation</strong> &mdash; long before any visible deliberation in the CoT. The probability of the correct answer stays suppressed throughout decoding. Under complex hints we observe partial evidence of <em>compute-then-switch</em>, but the override still happens inside the model&rsquo;s hidden state &mdash; leaving external CoT monitors blind to the internal decision.
+      </div>
+    </div>
+
+    <!-- ===== 4. Stress tests ===== -->
+    <div class="result-block">
+      <h3>Stress tests: ruling out alternatives</h3>
+
+      <p class="result-intro">
+        To confirm that these failures reflect genuine hint-induced reasoning collapse rather than artifacts of our setup, we run four ablations: varying the hinted target letter across B, C, and D; evaluating closed-source frontier systems; decomposing the composition of answer shifts under complex hints; and averaging over five stochastic runs at temperature&nbsp;0.5. The failure mode survives every check. Two of these ablations are visualized below.
+      </p>
+
+      <figure class="result-figure">
+        <img src="figures/deception_closed_source-1.png" alt="Dot plot of deception rates for GPT-5-mini, GPT-4o-mini, and Claude Haiku 4.5 across 13 languages, under simple hints (left panel) and complex hints (right panel). Most points cluster near 100%, with GPT-5-mini showing some lower values under complex hints." />
+        <figcaption>
+          <strong>Figure 4.</strong> Deception rates for closed-source frontier models across 13 languages. <em>Left:</em> simple hints. <em>Right:</em> complex hints. Both GPT-4o-mini and Claude Haiku 4.5 saturate near 100% deception across nearly every language. GPT-5-mini shows modest improvements under complex hints in some high-resource settings, but still exceeds 80% in most cases &mdash; even under the condition where the hint requires explicit, monitorable computation.
+        </figcaption>
+      </figure>
+
+      <figure class="result-figure">
+        <img src="figures/fig_shift_composition_HL-1.png" alt="Stacked bar chart showing the composition of shifted answers under complex hints, split by model family and language resource level. Cued shifts (pink, to target C) decrease in low-resource settings; miscued shifts (blue B, yellow D) increase." />
+        <figcaption>
+          <strong>Figure 5.</strong> Composition of shifted answers under complex hints, by model and language resource level. <strong>Cued</strong> shifts (pink, target C) generally decrease in low-resource settings, while <strong>miscued</strong> shifts (blue B, yellow D) rise. For Qwen3, cued shifts drop from 48% in high-resource settings to 30% in low-resource, while miscued shifts rise from 52% to 71%. Similar patterns hold for DS-Qwen and Llama.
+        </figcaption>
+      </figure>
+
+      <div class="takeaway-box">
+        <span class="takeaway-label">Takeaway:</span>
+        Across hinted-letter variations, closed-source frontier systems, stochastic reruns, and shift-composition analyses, the failure mode persists. Importantly, complex hints don&rsquo;t merely steer models to a specific target letter &mdash; under <strong>linguistic distribution shift</strong>, they destabilize the entire hint-mapping procedure, producing erroneous shifts in any direction. The vulnerability is not an artifact of architecture, sampling, or option choice &mdash; it is a systemic property of current CoT-based oversight.
+      </div>
+    </div>
+
   </section>
 
   <section id="citation">
