@@ -1014,13 +1014,13 @@
       <figure class="result-figure figure-full">
         <img src="figures/unfaithfulness_neurips_sbs-1.png" alt="Heatmap of deception rates across languages and open-weight models under simple and complex hints." />
         <figcaption>
-          <strong>Figure 1.</strong> Deception rates across 13 languages and open-weight model families. Both simple and complex hints produce near-saturated unfaithfulness across most model-language pairs, with GPT-OSS showing the clearest but incomplete reduction.
+          <strong>Figure 1.</strong> Deception rates by language (rows, descending from high- to low-resource) and model (columns). <em>Left:</em> simple hints (<code>&lt;answer&gt;C&lt;/answer&gt;</code>). <em>Right:</em> complex hints requiring <code>(K + Q) mod 4</code> computation. Higher values indicate lower CoT monitorability. Both panels saturate near 100% across most cells; only the GPT-OSS family shows meaningful reductions.
         </figcaption>
       </figure>
 
       <div class="takeaway-box">
         <span class="takeaway-label">Key takeaway:</span>
-        The main failure is not only that adversarial hints change answers; it is that the CoT trace usually fails to reveal the cue's causal influence. Complex hints reduce raw target selection, but conditional on choosing the hinted target, reasoning remains almost entirely unfaithful. This separates answer-level robustness from monitorability.
+        The key result is a separation between <strong>answer robustness</strong> and <strong>reasoning monitorability</strong>. Complex hints make models less likely to choose the hinted target overall, but when a model does choose that target, its CoT almost never reveals that the hint caused the answer. In other words, a model can become less susceptible to a hint without becoming more transparent or monitorable.
       </div>
     </article>
 
