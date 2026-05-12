@@ -536,7 +536,54 @@
   .finding-desc strong { color: var(--ink); font-weight: 600; }
 
 
+/* ============================================
+     EXPERIMENTAL SETUP — horizontal stat strip
+     ============================================ */
+  .setup-intro {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+    max-width: 780px;
+  }
 
+  /* The 1px gap + container background creates clean dividers */
+  .setup-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border-light);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .setup-cell {
+    background: var(--surface);
+    padding: 1.35rem 1rem;
+    text-align: center;
+  }
+
+  .setup-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+    line-height: 1;
+    background: var(--warning-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .setup-label {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+    line-height: 1.35;
+  }
     
 
   /* ============================================
@@ -621,6 +668,7 @@
     .demo-header { padding: 0.65rem 0.9rem; }
     .demo-model { font-size: 0.68rem; }
     .findings-grid { grid-template-columns: 1fr; }
+    .setup-strip { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* Respect users who prefer reduced motion */
@@ -851,7 +899,30 @@
     <!-- ===== Placeholder sections — we'll flesh these out next ===== -->
 
   <section id="experimental-setup">
-    <h2>Experimental Setup</h2>
+    <h2>Setup</h2>
+
+    <p class="setup-intro">
+      A summary of our setup is below: 
+    </p>
+
+    <div class="setup-strip">
+      <div class="setup-cell">
+        <div class="setup-number">13</div>
+        <div class="setup-label">Languages</div>
+      </div>
+      <div class="setup-cell">
+        <div class="setup-number">16</div>
+        <div class="setup-label">Models</div>
+      </div>
+      <div class="setup-cell">
+        <div class="setup-number">7</div>
+        <div class="setup-label">Frontier families</div>
+      </div>
+      <div class="setup-cell">
+        <div class="setup-number">2</div>
+        <div class="setup-label">Adversarial hint types</div>
+      </div>
+    </div>
   </section>
 
   <section id="results">
@@ -863,6 +934,9 @@
   </section>
 
 </main>
+
+
+
 
 <!-- =========================================================
      FOOTER
