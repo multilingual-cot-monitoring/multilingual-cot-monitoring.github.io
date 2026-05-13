@@ -108,53 +108,45 @@
   }
 
   .hero::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -16rem;
-    transform: translateX(-50%);
-    width: min(82rem, 95vw);
-    height: 24rem;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgba(245,158,11,0.22), transparent 62%);
-    filter: blur(4px);
-    pointer-events: none;
-  }
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -13rem;
+  transform: translateX(-50%);
+  width: min(72rem, 92vw);
+  height: 20rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(245,158,11,0.18), transparent 62%);
+  filter: blur(4px);
+  pointer-events: none;
+}
 
   .hero-inner {
-    position: relative;
-    z-index: 1;
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 2.25rem 1.25rem 2rem;
-    text-align: center;
-  }
+  position: relative;
+  z-index: 1;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.65rem 1.25rem 1.55rem;
+  text-align: center;
+}
 
-  .hero-title {
-    max-width: 900px;
-    margin: 0.65rem auto 0.6rem;
-    font-family: "Fraunces", Georgia, serif;
-    font-size: clamp(1.85rem, 4.2vw, 3.25rem);
-    line-height: 1.04;
-    letter-spacing: -0.035em;
-    font-weight: 650;
-  }
+.hero-title {
+  max-width: 980px;
+  margin: 0 auto 0.75rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.85rem, 3.7vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 650;
+}
 
-  .hero-title span {
-    background: var(--grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-style: italic;
-  }
-
-  .hero-subtitle {
-    max-width: 720px;
-    margin: 0 auto 0.95rem;
-    color: var(--paper-muted);
-    font-size: clamp(0.95rem, 1.35vw, 1.06rem);
-    line-height: 1.55;
-  }
+.hero-subtitle {
+  max-width: 760px;
+  margin: 0 auto 1rem;
+  color: var(--paper-muted);
+  font-size: clamp(0.95rem, 1.25vw, 1.08rem);
+  line-height: 1.55;
+}
 
   .authors {
     margin-top: 0.7rem;
@@ -785,14 +777,14 @@
 <body>
 <header class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI Safety · Multilingual Oversight</div>
+    <!-- <div class="eyebrow">AI Safety · Multilingual Oversight</div> -->
 
-    <h1 class="hero-title">
-      The <span>Fragility</span> of Chain-of-Thought Monitoring Across Typologically Diverse Languages
+     <h1 class="hero-title">
+      The Fragility of Chain-of-Thought Monitoring Across Typologically Diverse Languages
     </h1>
 
     <p class="hero-subtitle">
-      A multilingual AI safety study showing that adversarial hints can make chain-of-thought traces appear monitorable while the model's answer is driven by a misleading cue.
+      Adversarial hints expose a cross-lingual collapse of CoT monitorability &mdash; with a 95.9% deception rate across 16 frontier models and 13 languages.
     </p>
 
     <p class="authors">
